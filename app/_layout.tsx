@@ -1,3 +1,4 @@
+import "../global.css";
 import { useUsersActions } from "@/api/users";
 import AuthProvider from "@/providers/AuthProvider";
 import { getToken } from "@/utils/auth";
@@ -8,6 +9,8 @@ import React from "react";
 import * as SplashScreen from "expo-splash-screen";
 import CurrentUser from "@/types/CurrentUser";
 import QueryProvider from "@/providers/QueryProvider";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import Toast from "react-native-toast-message";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -15,7 +18,10 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={DefaultTheme}>
       <QueryProvider>
-        <ProtectedLayout />
+        <SafeAreaProvider>
+          <ProtectedLayout />
+          <Toast />
+        </SafeAreaProvider>
       </QueryProvider>
     </ThemeProvider>
   );
@@ -70,21 +76,8 @@ const ProtectedLayout = () => {
   return (
     <AuthProvider user={state.user}>
       <Stack screenOptions={{ headerShown: false }}>
-        <Stack.Screen
-          name="(auth)"
-          options={{
-            headerShown: false,
-            title: "Dashboard",
-          }}
-        />
-
-        <Stack.Screen
-          name="(guest)"
-          options={{
-            headerShown: false,
-            title: "Login",
-          }}
-        />
+        <Stack.Screen name="(auth)" />
+        <Stack.Screen name="(guest)" />
       </Stack>
       <StatusBar style="auto" />
     </AuthProvider>
