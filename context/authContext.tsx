@@ -12,12 +12,12 @@ export const AuthContext = React.createContext<{
 });
 
 export const AuthContextProvider = ({
+  user,
   children,
 }: {
+  user: CurrentUser | null;
   children: React.ReactNode;
 }) => {
-  const [user, setUser] = React.useState<CurrentUser | null>(null);
-
   return (
     <AuthContext.Provider value={{ user: user }}>
       {children}

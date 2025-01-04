@@ -1,32 +1,95 @@
+import { useUsersActions } from "@/api/users";
 import AuthProvider from "@/providers/AuthProvider";
+import { getToken } from "@/utils/auth";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
-import { Slot, Stack } from "expo-router";
+import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
-import "react-native-reanimated";
+import React from "react";
+import * as SplashScreen from "expo-splash-screen";
+import CurrentUser from "@/types/CurrentUser";
+import { ToastProvider } from "@gluestack-ui/toast";
+import QueryProvider from "@/providers/QueryProvider";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   return (
     <ThemeProvider value={DefaultTheme}>
-      <AuthProvider>
-        <Stack>
-          <Stack.Screen
-            name="(auth)"
-            options={{
-              headerShown: false,
-              title: "Dashboard",
-            }}
-          />
-
-          <Stack.Screen
-            name="(guest)"
-            options={{
-              headerShown: false,
-              title: "Login",
-            }}
-          />
-        </Stack>
-        <StatusBar style="auto" />
-      </AuthProvider>
+      <QueryProvider>
+        <ToastProvider>
+          <ProtectedLayout />
+        </ToastProvider>
+      </QueryProvider>
     </ThemeProvider>
   );
 }
+
+const ProtectedLayout = () => {
+  const { check } = useUsersActions();
+
+  const [state, setState] = React.useState<{
+    loaded: boolean;
+    user: CurrentUser | null;
+  }>({
+    loaded: false,
+    user: null,
+  });
+
+  React.useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const token = await getToken();
+        await check(token ?? "", {
+          onSuccess: (data) => {
+            setState({
+              loaded: true,
+              user: data.data,
+            });
+          },
+          onError: () => {
+            setState((prev) => ({
+              ...prev,
+              loaded: true,
+            }));
+          },
+          onSettled: () => {
+            SplashScreen.hideAsync();
+          },
+        });
+      } catch (error) {
+        setState((prev) => ({
+          ...prev,
+          loaded: true,
+        }));
+        SplashScreen.hideAsync();
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (!state.loaded) return null;
+
+  return (
+    <AuthProvider user={state.user}>
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen
+          name="(auth)"
+          options={{
+            headerShown: false,
+            title: "Dashboard",
+          }}
+        />
+
+        <Stack.Screen
+          name="(guest)"
+          options={{
+            headerShown: false,
+            title: "Login",
+          }}
+        />
+      </Stack>
+      <StatusBar style="auto" />
+    </AuthProvider>
+  );
+};
