@@ -7,7 +7,6 @@ import { StatusBar } from "expo-status-bar";
 import React from "react";
 import * as SplashScreen from "expo-splash-screen";
 import CurrentUser from "@/types/CurrentUser";
-import { ToastProvider } from "@gluestack-ui/toast";
 import QueryProvider from "@/providers/QueryProvider";
 
 SplashScreen.preventAutoHideAsync();
@@ -16,9 +15,7 @@ export default function RootLayout() {
   return (
     <ThemeProvider value={DefaultTheme}>
       <QueryProvider>
-        <ToastProvider>
-          <ProtectedLayout />
-        </ToastProvider>
+        <ProtectedLayout />
       </QueryProvider>
     </ThemeProvider>
   );
