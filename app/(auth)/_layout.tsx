@@ -24,6 +24,7 @@ import CurrentUser from "~/types/CurrentUser";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { clearToken, getToken } from "~/utils/auth";
 import * as Updates from "expo-updates";
+import SocketProvider from "~/providers/SocketProvider";
 
 export default function AuthLayout() {
   const { user } = useAuth();
@@ -32,82 +33,84 @@ export default function AuthLayout() {
   if (!user) return <Redirect href="/(guest)" />;
 
   return (
-    <GestureHandlerRootView className="flex-1 bg-red-200">
-      <Drawer
-        drawerContent={(props) => (
-          <CustomDrawerContent user={user} {...props} />
-        )}
-      >
-        <Drawer.Screen
-          name="index"
-          options={{
-            drawerLabel: "Home",
-            title: "Overview",
-            drawerIcon: ({ color, size }) => (
-              <HomeIcon color={color} size={size} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="dashboard"
-          options={{
-            drawerLabel: "Dashboard",
-            title: "Dashboard",
-            drawerIcon: ({ color, size }) => (
-              <LayoutDashboardIcon color={color} size={size} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="insights"
-          options={{
-            drawerLabel: "Insights",
-            title: "Insights",
-            drawerIcon: ({ color, size }) => (
-              <ChartAreaIcon color={color} size={size} />
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="entities/index"
-          options={{
-            drawerLabel: "Entities",
-            title: "Entities",
-            drawerIcon: ({ color, size }) => (
-              <BuildingIcon color={color} size={size} />
-            ),
-            headerRight: () => (
-              <TouchableOpacity onPress={() => {}} className="mr-6">
-                <MaterialIcons name="add" size={24} color="gray" />
-              </TouchableOpacity>
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="entities/single"
-          options={{ title: "Entity", drawerItemStyle: { display: "none" } }}
-        />
-        <Drawer.Screen
-          name="devices/index"
-          options={{
-            drawerLabel: "Devices",
-            title: "Devices",
-            drawerIcon: ({ color, size }) => (
-              <MonitorSpeakerIcon color={color} size={size} />
-            ),
-            headerRight: () => (
-              <TouchableOpacity onPress={() => {}} className="mr-6">
-                <MaterialIcons name="add" size={24} color="gray" />
-              </TouchableOpacity>
-            ),
-          }}
-        />
-        <Drawer.Screen
-          name="devices/single"
-          options={{ title: "Device", drawerItemStyle: { display: "none" } }}
-        />
-      </Drawer>
-    </GestureHandlerRootView>
+    <SocketProvider>
+      <GestureHandlerRootView className="flex-1 bg-red-200">
+        <Drawer
+          drawerContent={(props) => (
+            <CustomDrawerContent user={user} {...props} />
+          )}
+        >
+          <Drawer.Screen
+            name="index"
+            options={{
+              drawerLabel: "Home",
+              title: "Overview",
+              drawerIcon: ({ color, size }) => (
+                <HomeIcon color={color} size={size} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="dashboard"
+            options={{
+              drawerLabel: "Dashboard",
+              title: "Dashboard",
+              drawerIcon: ({ color, size }) => (
+                <LayoutDashboardIcon color={color} size={size} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="insights"
+            options={{
+              drawerLabel: "Insights",
+              title: "Insights",
+              drawerIcon: ({ color, size }) => (
+                <ChartAreaIcon color={color} size={size} />
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="entities/index"
+            options={{
+              drawerLabel: "Entities",
+              title: "Entities",
+              drawerIcon: ({ color, size }) => (
+                <BuildingIcon color={color} size={size} />
+              ),
+              headerRight: () => (
+                <TouchableOpacity onPress={() => {}} className="mr-6">
+                  <MaterialIcons name="add" size={24} color="gray" />
+                </TouchableOpacity>
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="entities/single"
+            options={{ title: "Entity", drawerItemStyle: { display: "none" } }}
+          />
+          <Drawer.Screen
+            name="devices/index"
+            options={{
+              drawerLabel: "Devices",
+              title: "Devices",
+              drawerIcon: ({ color, size }) => (
+                <MonitorSpeakerIcon color={color} size={size} />
+              ),
+              headerRight: () => (
+                <TouchableOpacity onPress={() => {}} className="mr-6">
+                  <MaterialIcons name="add" size={24} color="gray" />
+                </TouchableOpacity>
+              ),
+            }}
+          />
+          <Drawer.Screen
+            name="devices/single"
+            options={{ title: "Device", drawerItemStyle: { display: "none" } }}
+          />
+        </Drawer>
+      </GestureHandlerRootView>
+    </SocketProvider>
   );
 }
 
