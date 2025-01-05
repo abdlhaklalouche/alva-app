@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/authContext";
-import { Redirect, Stack } from "expo-router";
+import { Redirect, router, Stack } from "expo-router";
 import "react-native-reanimated";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
@@ -22,6 +22,8 @@ import {
 } from "@react-navigation/drawer";
 import CurrentUser from "~/types/CurrentUser";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { clearToken, getToken } from "~/utils/auth";
+import * as Updates from "expo-updates";
 
 export default function AuthLayout() {
   const { user } = useAuth();
@@ -121,6 +123,12 @@ type CustomDrawerContentProps = DrawerContentComponentProps & {
 };
 
 function CustomDrawerContent(props: CustomDrawerContentProps) {
+  const handleLogout = async () => {
+    await clearToken();
+
+    Updates.reloadAsync();
+  };
+
   return (
     <DrawerContentScrollView {...props}>
       <View className="py-10 flex flex-row items-center">
@@ -140,7 +148,7 @@ function CustomDrawerContent(props: CustomDrawerContentProps) {
 
       <View className="mt-auto py-2 px-1">
         <TouchableOpacity
-          onPress={() => {}}
+          onPress={handleLogout}
           className="flex flex-row items-center p-4 rounded-lg"
         >
           <LogOutIcon color="gray" size={20} />

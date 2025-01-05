@@ -42,7 +42,8 @@ const ProtectedLayout = () => {
     const fetchUser = async () => {
       try {
         const token = await getToken();
-        await check(token ?? "", {
+
+        check(token ?? "", {
           onSuccess: (data) => {
             setState({
               loaded: true,

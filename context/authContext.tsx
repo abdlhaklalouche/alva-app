@@ -1,8 +1,6 @@
 "use client";
 
-import { useUsersActions } from "@/api/users";
 import CurrentUser from "@/types/CurrentUser";
-import { getToken } from "@/utils/auth";
 import React from "react";
 
 export const AuthContext = React.createContext<{

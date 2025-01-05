@@ -12,6 +12,7 @@ import { useUsersActions } from "~/api/users";
 import LoadingButton from "../components/other/loadingbutton";
 import Toast from "react-native-toast-message";
 import { storeToken } from "~/utils/auth";
+import * as Updates from "expo-updates";
 
 export default function LoginScreen() {
   const { signin, isSigningIn } = useUsersActions();
@@ -40,8 +41,7 @@ export default function LoginScreen() {
 
         await storeToken(data.data.token);
 
-        // @ts-ignore
-        router.replace("(auth)");
+        Updates.reloadAsync();
       },
       onError: (error: any) => {
         console.log(JSON.stringify(error));
