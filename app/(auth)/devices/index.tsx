@@ -1,24 +1,64 @@
 import { FlatList, Pressable, View } from "react-native";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "~/components/ui/text";
 import { useGetDevices } from "~/api/devices";
 import Device from "~/types/Device";
 import { BatteryCharging } from "lucide-react-native";
 import { router } from "expo-router";
 
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectLabel,
+  SelectTrigger,
+  SelectValue,
+} from "~/components/ui/select";
+import Room from "~/types/Room";
+import React from "react";
+import { useGetRooms } from "~/api/rooms";
+
 export default function DevicesScreen() {
+  const [room, setRoom] = React.useState<Room | undefined>(undefined);
+
+  const {
+    query: { data: rooms, isLoading: isLoadingRooms },
+  } = useGetRooms();
+
   const {
     query: { data: devices, isLoading: isLoadingDevices },
   } = useGetDevices();
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
+    <View>
+      <View className="px-3 pt-4 flex-row">
+        {!isLoadingDevices && (
+          <Select onValueChange={(value) => {}}>
+            <SelectTrigger className="w-[200px]">
+              <SelectValue
+                className="text-foreground text-sm native:text-lg"
+                placeholder="Room.."
+              />
+            </SelectTrigger>
+            <SelectContent className="w-[200px]">
+              <SelectGroup>
+                <SelectLabel>Room</SelectLabel>
+                {rooms?.data.map((room) => (
+                  <SelectItem label={room.name} value={room.id} key={room.id}>
+                    {room.name}
+                  </SelectItem>
+                ))}
+              </SelectGroup>
+            </SelectContent>
+          </Select>
+        )}
+      </View>
       <FlatList
         data={devices?.data ?? []}
         className="p-4"
         renderItem={({ item }) => <DeviceItem device={item} />}
       />
-    </SafeAreaView>
+    </View>
   );
 }
 

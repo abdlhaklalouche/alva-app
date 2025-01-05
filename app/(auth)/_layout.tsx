@@ -1,5 +1,5 @@
 import { useAuth } from "@/context/authContext";
-import { Redirect, router, Stack } from "expo-router";
+import { Redirect } from "expo-router";
 import "react-native-reanimated";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { Drawer } from "expo-router/drawer";
@@ -7,13 +7,11 @@ import {
   BuildingIcon,
   ChartAreaIcon,
   HomeIcon,
-  LampIcon,
   LayoutDashboardIcon,
   LogOutIcon,
-  MapPinHouse,
   MonitorSpeakerIcon,
 } from "lucide-react-native";
-import { Image, StyleSheet, TouchableOpacity, View } from "react-native";
+import { Image, TouchableOpacity, View } from "react-native";
 import { Text } from "~/components/ui/text";
 import {
   DrawerContentComponentProps,
@@ -21,10 +19,10 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import CurrentUser from "~/types/CurrentUser";
-import MaterialIcons from "@expo/vector-icons/MaterialIcons";
-import { clearToken, getToken } from "~/utils/auth";
+import { clearToken } from "~/utils/auth";
 import * as Updates from "expo-updates";
 import SocketProvider from "~/providers/SocketProvider";
+import { PortalHost } from "@rn-primitives/portal";
 
 export default function AuthLayout() {
   const { user } = useAuth();
@@ -78,11 +76,6 @@ export default function AuthLayout() {
               drawerIcon: ({ color, size }) => (
                 <BuildingIcon color={color} size={size} />
               ),
-              headerRight: () => (
-                <TouchableOpacity onPress={() => {}} className="mr-6">
-                  <MaterialIcons name="add" size={24} color="gray" />
-                </TouchableOpacity>
-              ),
             }}
           />
           <Drawer.Screen
@@ -97,11 +90,6 @@ export default function AuthLayout() {
               drawerIcon: ({ color, size }) => (
                 <MonitorSpeakerIcon color={color} size={size} />
               ),
-              headerRight: () => (
-                <TouchableOpacity onPress={() => {}} className="mr-6">
-                  <MaterialIcons name="add" size={24} color="gray" />
-                </TouchableOpacity>
-              ),
             }}
           />
           <Drawer.Screen
@@ -109,6 +97,7 @@ export default function AuthLayout() {
             options={{ title: "Device", drawerItemStyle: { display: "none" } }}
           />
         </Drawer>
+        <PortalHost />
       </GestureHandlerRootView>
     </SocketProvider>
   );

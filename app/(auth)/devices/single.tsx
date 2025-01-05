@@ -16,23 +16,7 @@ export default function DevicePage() {
 
   return (
     <View>
-      <Drawer.Screen
-        name="devices/single"
-        options={{
-          title: device.name,
-          drawerItemStyle: { display: "none" },
-          headerRight: () => (
-            <View className="flex-row">
-              <TouchableOpacity onPress={() => {}} className="mr-6">
-                <MaterialIcons name="edit" size={24} color="gray" />
-              </TouchableOpacity>
-              <TouchableOpacity onPress={() => {}} className="mr-6">
-                <MaterialIcons name="delete" size={24} color="gray" />
-              </TouchableOpacity>
-            </View>
-          ),
-        }}
-      />
+      <Drawer.Screen name="devices/single" options={{ title: device.name }} />
     </View>
   );
 }

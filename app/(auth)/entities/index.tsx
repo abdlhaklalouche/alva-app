@@ -12,13 +12,11 @@ export default function EntitiesScreen() {
   } = useGetEntities();
 
   return (
-    <SafeAreaView className="flex-1 bg-gray-100">
-      <FlatList
-        data={entities?.data ?? []}
-        className="p-4"
-        renderItem={({ item }) => <EntityItem entity={item} />}
-      />
-    </SafeAreaView>
+    <FlatList
+      data={entities?.data ?? []}
+      className="p-4"
+      renderItem={({ item }) => <EntityItem entity={item} />}
+    />
   );
 }
 

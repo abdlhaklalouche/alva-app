@@ -21,16 +21,12 @@ export default function SocketContextProvider({
       transports: ["websocket"],
     });
 
-    socket.on("receive_message", (data) => {});
-
-    socket.on("users_response", (data) => {});
-
     setSocket(socket);
 
     return () => {
       socket.disconnect();
     };
-  }, []);
+  }, [socket?.connected]);
 
   return (
     <SocketContext.Provider value={{ socket }}>
