@@ -24,7 +24,7 @@ const items: { title: string; url: any; icon: any }[] = [
   },
   {
     title: "Devices",
-    url: "device",
+    url: "devices",
     icon: "devices-other",
   },
 ];

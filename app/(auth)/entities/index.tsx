@@ -1,9 +1,10 @@
+import { Link, router } from "expo-router";
 import { FlatList, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useGetEntities } from "~/api/entities";
+import DynamicIcon from "~/app/components/other/dynamicon";
 import { Text } from "~/components/ui/text";
 import Entity from "~/types/Entity";
-import DynamicIcon from "../components/other/dynamicon";
 
 export default function EntitiesScreen() {
   const {
@@ -23,7 +24,17 @@ export default function EntitiesScreen() {
 
 const EntityItem = ({ entity }: { entity: Entity }) => {
   return (
-    <Pressable className="my-2 p-4 bg-white rounded-lg">
+    <Pressable
+      onPress={() => {
+        router.push({
+          pathname: "/entities/single",
+          params: {
+            entity: JSON.stringify(entity),
+          },
+        });
+      }}
+      className="my-2 p-4 bg-white rounded-lg"
+    >
       <View className="flex-row justify-between">
         <View className="flex-row items-center shrink-0">
           <View className="flex items-center justify-center relative rounded-full h-12 w-12 bg-gray-900">

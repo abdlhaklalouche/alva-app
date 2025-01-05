@@ -69,7 +69,7 @@ export default function AuthLayout() {
           }}
         />
         <Drawer.Screen
-          name="entities"
+          name="entities/index"
           options={{
             drawerLabel: "Entities",
             title: "Entities",
@@ -84,7 +84,11 @@ export default function AuthLayout() {
           }}
         />
         <Drawer.Screen
-          name="devices"
+          name="entities/single"
+          options={{ title: "Entity", drawerItemStyle: { display: "none" } }}
+        />
+        <Drawer.Screen
+          name="devices/index"
           options={{
             drawerLabel: "Devices",
             title: "Devices",
@@ -97,6 +101,10 @@ export default function AuthLayout() {
               </TouchableOpacity>
             ),
           }}
+        />
+        <Drawer.Screen
+          name="devices/single"
+          options={{ title: "Device", drawerItemStyle: { display: "none" } }}
         />
       </Drawer>
     </GestureHandlerRootView>

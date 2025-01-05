@@ -1,10 +1,10 @@
 import { FlatList, Pressable, View } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "~/components/ui/text";
-import DynamicIcon from "../components/other/dynamicon";
 import { useGetDevices } from "~/api/devices";
 import Device from "~/types/Device";
 import { BatteryCharging } from "lucide-react-native";
+import { router } from "expo-router";
 
 export default function DevicesScreen() {
   const {
@@ -24,7 +24,17 @@ export default function DevicesScreen() {
 
 const DeviceItem = ({ device }: { device: Device }) => {
   return (
-    <Pressable className="my-2 p-4 bg-white rounded-lg">
+    <Pressable
+      onPress={() => {
+        router.push({
+          pathname: "/devices/single",
+          params: {
+            entity: JSON.stringify(device),
+          },
+        });
+      }}
+      className="my-2 p-4 bg-white rounded-lg"
+    >
       <View className="flex-row justify-between">
         <View className="flex-row items-center shrink-0">
           <View className="flex items-center justify-center relative rounded-full h-10 w-10 bg-gray-900">
