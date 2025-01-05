@@ -5,16 +5,15 @@ import * as schema from "yup";
 import FormTextField from "../components/form/textfield";
 import { Button } from "~/components/ui/button";
 import { Text } from "~/components/ui/text";
-import { Stack } from "expo-router";
+import { router, Stack } from "expo-router";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Image } from "react-native";
-import { usersKeys, useUsersActions } from "~/api/users";
+import { useUsersActions } from "~/api/users";
 import LoadingButton from "../components/other/loadingbutton";
-import { useQueryClient } from "@tanstack/react-query";
 import Toast from "react-native-toast-message";
+import { storeToken } from "~/utils/auth";
 
 export default function LoginScreen() {
-  const queryClient = useQueryClient();
   const { signin, isSigningIn } = useUsersActions();
 
   const methods = useForm({
@@ -33,13 +32,19 @@ export default function LoginScreen() {
     if (isSigningIn) return;
 
     signin(data, {
-      onSuccess: (data) => {
+      onSuccess: async (data) => {
         Toast.show({
           type: "success",
           text1: data.message,
         });
+
+        await storeToken(data.data.token);
+
+        // @ts-ignore
+        router.replace("(auth)");
       },
       onError: (error: any) => {
+        console.log(JSON.stringify(error));
         Toast.show({
           type: "error",
           text1: error?.response?.data?.message ?? error.message,
