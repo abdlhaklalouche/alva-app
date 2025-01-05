@@ -23,11 +23,6 @@ const items: { title: string; url: any; icon: any }[] = [
     icon: "location-city",
   },
   {
-    title: "Rooms",
-    url: "rooms",
-    icon: "bedroom-parent",
-  },
-  {
     title: "Devices",
     url: "device",
     icon: "devices-other",

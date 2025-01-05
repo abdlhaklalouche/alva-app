@@ -84,21 +84,6 @@ export default function AuthLayout() {
           }}
         />
         <Drawer.Screen
-          name="rooms"
-          options={{
-            drawerLabel: "Rooms",
-            title: "Romms",
-            drawerIcon: ({ color, size }) => (
-              <MapPinHouse color={color} size={size} />
-            ),
-            headerRight: () => (
-              <TouchableOpacity onPress={() => {}} className="mr-6">
-                <MaterialIcons name="add" size={24} color="gray" />
-              </TouchableOpacity>
-            ),
-          }}
-        />
-        <Drawer.Screen
           name="devices"
           options={{
             drawerLabel: "Devices",

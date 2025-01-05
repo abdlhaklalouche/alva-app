@@ -11,6 +11,7 @@ import CurrentUser from "@/types/CurrentUser";
 import QueryProvider from "@/providers/QueryProvider";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import Toast from "react-native-toast-message";
+import axios from "~/lib/axios";
 
 SplashScreen.preventAutoHideAsync();
 
