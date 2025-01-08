@@ -1,33 +1,39 @@
-import { View } from "react-native";
+import { format } from "date-fns";
+import { Dimensions, View } from "react-native";
 import { LineChart } from "react-native-gifted-charts";
 import { Text } from "~/components/ui/text";
 
-const data = [
-  { value: 0 },
-  { value: 50 },
-  { value: 80 },
-  { value: 40 },
-  { value: 70 },
-  { value: 90 },
-  { value: 50 },
-  { value: 80 },
-  { value: 40 },
-  { value: 70 },
-];
+type Consumption = {
+  key: string;
+  value: number;
+};
 
-export default function HomeInsightsChart() {
+interface DashboardChartProps {
+  data: Consumption[];
+}
+
+export default function HomeInsightsChart({ data }: DashboardChartProps) {
+  const formattedData = data.map((item) => ({
+    value: item.value,
+  }));
+
+  const screenWidth = Dimensions.get("window").width;
+
   return (
-    <View className="px-4 py-2 bg-white rounded-lg">
+    <View className="py-2 bg-white rounded-lg">
       <Text className="text-sm mb-2 text-gray-600">Energy Consumption:</Text>
       <LineChart
         areaChart
-        data={data}
+        curved
+        data={formattedData}
+        initialSpacing={0}
         startFillColor="rgb(0, 0, 0)"
         startOpacity={0.8}
         endFillColor="rgb(255, 255, 255)"
         endOpacity={0.3}
         hideAxesAndRules
         hideYAxisText
+        hideRules
         yAxisLabelWidth={0}
         adjustToWidth
         height={80}

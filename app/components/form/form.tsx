@@ -131,7 +131,7 @@ const FormMessage = React.forwardRef<
 });
 FormMessage.displayName = "FormMessage";
 
-export {
+export default {
   useFormField,
   Form,
   FormControl,

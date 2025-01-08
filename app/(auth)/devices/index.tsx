@@ -31,28 +31,6 @@ export default function DevicesScreen() {
 
   return (
     <View>
-      <View className="px-3 pt-4 flex-row">
-        {!isLoadingDevices && (
-          <Select onValueChange={(value) => {}}>
-            <SelectTrigger className="w-[200px]">
-              <SelectValue
-                className="text-foreground text-sm native:text-lg"
-                placeholder="Room.."
-              />
-            </SelectTrigger>
-            <SelectContent className="w-[200px]">
-              <SelectGroup>
-                <SelectLabel>Room</SelectLabel>
-                {rooms?.data.map((room) => (
-                  <SelectItem label={room.name} value={room.id} key={room.id}>
-                    {room.name}
-                  </SelectItem>
-                ))}
-              </SelectGroup>
-            </SelectContent>
-          </Select>
-        )}
-      </View>
       <FlatList
         data={devices?.data ?? []}
         className="p-4"

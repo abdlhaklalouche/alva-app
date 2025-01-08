@@ -1,10 +1,17 @@
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import { router } from "expo-router";
-import { Image, Pressable, ScrollView, View } from "react-native";
+import {
+  ActivityIndicator,
+  Image,
+  Pressable,
+  ScrollView,
+  View,
+} from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Text } from "~/components/ui/text";
 import { useAuth } from "~/context/authContext";
 import HomeInsightsChart from "../components/charts/home-insights";
+import { useGetDashboard } from "~/api/insights";
 
 const items: { title: string; url: any; icon: any }[] = [
   {
@@ -32,6 +39,10 @@ const items: { title: string; url: any; icon: any }[] = [
 export default function IndexScreen() {
   const { user } = useAuth();
 
+  const { data, isFetching, error } = useGetDashboard({
+    period: "month",
+  });
+
   return (
     <SafeAreaView className="flex-1 bg-gray-100">
       <ScrollView contentContainerStyle={{ flexGrow: 1 }} className="px-4">
@@ -49,7 +60,15 @@ export default function IndexScreen() {
         </View>
 
         <View className="mt-5 mb-3">
-          <HomeInsightsChart />
+          {isFetching ? (
+            <View className="flex justify-center items-center h-50 bg-white rounded-lg">
+              <ActivityIndicator />
+            </View>
+          ) : (
+            <View className="w-full bg-white rounded-lg p-2">
+              <HomeInsightsChart data={data?.consumption ?? []} />
+            </View>
+          )}
         </View>
 
         <View className="flex-row flex-wrap flex-1 -mx-2">
