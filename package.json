@@ -54,18 +54,40 @@
     "react-native-safe-area-context": "4.12.0",
     "react-native-screens": "~4.4.0",
     "react-native-socket.io": "^0.3.1",
-    "react-native-svg": "^15.10.1",
+    "react-native-svg": "15.8.0",
     "react-native-toast-message": "^2.2.1",
     "react-native-web": "~0.19.13",
     "react-native-webview": "13.12.5",
     "socket.io-client": "^4.8.1",
     "tailwind-merge": "^2.6.0",
     "tailwindcss-animate": "^1.0.7",
-    "yup": "^1.6.1"
+    "yup": "^1.6.1",
+    "expo-dev-client": "~5.0.8"
   },
   "devDependencies": {
     "@types/react": "~18.3.12",
     "typescript": "^5.3.3"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "exclude": [
+          "lucide-react-native",
+          "@hookform/resolvers",
+          "@rn-primitives/label",
+          "@rn-primitives/portal",
+          "@rn-primitives/select",
+          "@rn-primitives/slot",
+          "@rn-primitives/types",
+          "class-variance-authority",
+          "date-fns",
+          "react-native-socket.io",
+          "socket.io-client",
+          "tailwindcss-animate",
+          "yup"
+        ]
+      }
+    }
+  }
 }
