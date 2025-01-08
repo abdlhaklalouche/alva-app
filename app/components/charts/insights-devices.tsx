@@ -12,7 +12,7 @@ export default function InsightsDevicesChart({
 }) {
   const screenWidth = Dimensions.get("window").width;
 
-  const devices = data[0].devices ?? [];
+  const devices = data[0]?.devices ?? [];
 
   const deviceNames = Object.keys(devices);
 
