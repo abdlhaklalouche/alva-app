@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "alva-app",
-    "slug": "alva-app",
+    "slug": "alva",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
@@ -15,7 +15,8 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.abdlhaklalouche.alva"
     },
     "web": {
       "bundler": "metro",
@@ -36,6 +37,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "fc3911bf-6825-4e4b-8a32-fe02ec647931"
+      }
+    },
+    "owner": "abdlhaklalouche"
   }
 }
