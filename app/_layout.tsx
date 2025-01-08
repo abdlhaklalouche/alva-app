@@ -1,7 +1,7 @@
 import "../global.css";
 import { useUsersActions } from "@/api/users";
 import AuthProvider from "@/providers/AuthProvider";
-import { getToken } from "@/utils/auth";
+import { clearToken, getToken } from "@/utils/auth";
 import { DefaultTheme, ThemeProvider } from "@react-navigation/native";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -50,7 +50,9 @@ const ProtectedLayout = () => {
               user: data.data,
             });
           },
-          onError: () => {
+          onError: async () => {
+            await clearToken();
+
             setState((prev) => ({
               ...prev,
               loaded: true,
@@ -65,6 +67,9 @@ const ProtectedLayout = () => {
           ...prev,
           loaded: true,
         }));
+
+        await clearToken();
+
         SplashScreen.hideAsync();
       }
     };
