@@ -23,15 +23,16 @@ import { clearToken } from "~/utils/auth";
 import * as Updates from "expo-updates";
 import SocketProvider from "~/providers/SocketProvider";
 import { PortalHost } from "@rn-primitives/portal";
+import * as Notifications from "expo-notifications";
 
 export default function AuthLayout() {
-  const { user } = useAuth();
+  const { user, token } = useAuth();
 
   // @ts-ignore
   if (!user) return <Redirect href="/(guest)" />;
 
   return (
-    <SocketProvider>
+    <SocketProvider token={token}>
       <GestureHandlerRootView className="flex-1 bg-red-200">
         <Drawer
           drawerContent={(props) => (

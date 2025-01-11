@@ -4,10 +4,16 @@ import React, { ReactNode } from "react";
 
 export default function AuthProvider({
   user,
+  token,
   children,
 }: {
   user: CurrentUser | null;
+  token: string;
   children: ReactNode;
 }) {
-  return <AuthContextProvider user={user}>{children}</AuthContextProvider>;
+  return (
+    <AuthContextProvider user={user} token={token}>
+      {children}
+    </AuthContextProvider>
+  );
 }
