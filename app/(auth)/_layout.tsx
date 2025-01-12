@@ -62,8 +62,8 @@ export default function AuthLayout() {
           <Drawer.Screen
             name="insights"
             options={{
-              drawerLabel: "Insights",
-              title: "Insights",
+              drawerLabel: "AI Insights",
+              title: "AI Insights",
               drawerIcon: ({ color, size }) => (
                 <ChartAreaIcon color={color} size={size} />
               ),

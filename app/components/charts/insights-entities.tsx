@@ -1,8 +1,7 @@
 import React, { useMemo } from "react";
 import { View, Text, StyleSheet } from "react-native";
-import { PieChart } from "react-native-gifted-charts"; // Importing PieChart from Gifted Charts
+import { PieChart } from "react-native-gifted-charts";
 
-// Example type definition for EntityConsumption
 type EntityConsumption = {
   entity: string;
   consumption: number;

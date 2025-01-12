@@ -1,14 +1,19 @@
 import { format } from "date-fns";
 import { Dimensions, View } from "react-native";
-import { DataSet, LineChart, lineDataItem } from "react-native-gifted-charts";
+import {
+  BarChart,
+  barDataItem,
+  DataSet,
+  LineChart,
+} from "react-native-gifted-charts";
 import { Text } from "~/components/ui/text";
 import { COLORS } from "~/data/colors";
-import { DeviceConsumption } from "~/types/Dashboard";
+import { InsightsDevice } from "~/types/Insights";
 
-export default function InsightsDevicesChart({
+export default function InsightsPredictionDeviceChart({
   data,
 }: {
-  data: DeviceConsumption[];
+  data: InsightsDevice[];
 }) {
   const screenWidth = Dimensions.get("window").width;
 
@@ -18,11 +23,12 @@ export default function InsightsDevicesChart({
 
   const result: any = deviceNames.map(() => []);
 
-  data.forEach((entry: DeviceConsumption) => {
+  data.forEach((entry) => {
     deviceNames.forEach((deviceName: any, index) => {
       result[index].push({
-        value: entry.devices[deviceName],
         label: format(new Date(entry.date), "MMM dd"),
+        value: entry.devices[deviceName],
+        textColor: COLORS[index],
       });
     });
   });
@@ -32,18 +38,16 @@ export default function InsightsDevicesChart({
     color: COLORS[index],
     textColor: COLORS[index],
     textFontSize: 10,
-    startFillColor: COLORS[index],
   }));
 
   return (
     <View className="w-full">
       <View className="mb-4">
         <LineChart
-          areaChart
           curved
+          height={160}
           dataSet={chartData}
-          width={screenWidth - 80}
-          adjustToWidth
+          width={screenWidth - 120}
           initialSpacing={0}
           yAxisTextStyle={{
             fontSize: 10,

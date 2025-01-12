@@ -26,6 +26,7 @@ export default function HomeInsightsChart({ data }: DashboardChartProps) {
         areaChart
         curved
         data={formattedData}
+        width={screenWidth - 40}
         initialSpacing={0}
         startFillColor="rgb(0, 0, 0)"
         startOpacity={0.8}

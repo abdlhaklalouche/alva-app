@@ -40,7 +40,7 @@ export default function SocketContextProvider({
     return () => {
       socket.disconnect();
     };
-  }, [socket?.connected]);
+  }, []);
 
   return (
     <SocketContext.Provider value={{ socket }}>
