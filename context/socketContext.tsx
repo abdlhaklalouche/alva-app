@@ -1,52 +1,33 @@
-"use client";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import { Socket } from "socket.io-client";
+import SocketSingleton from "~/singletons/socket";
 
-import React, { createContext, useEffect, useState } from "react";
-import * as io from "socket.io-client";
-import INotification from "~/types/INotification";
-import { pushNotification } from "~/utils/notifications";
-
-type SocketContextProps = { socket: io.Socket | undefined };
-
-const SocketContext = createContext<SocketContextProps>({
-  socket: undefined,
+const SocketContext = createContext<{ socket: Socket | null }>({
+  socket: null,
 });
 
-export default function SocketContextProvider({
-  token,
-  children,
-}: {
+export const SocketContextProvider: React.FC<{
   token: string;
   children: React.ReactNode;
-}) {
-  const [socket, setSocket] = useState<io.Socket>();
+}> = ({ token, children }) => {
+  const [socket, setSocket] = useState<Socket | null>(null);
 
   useEffect(() => {
-    let socket = io.connect(process.env.EXPO_PUBLIC_BACKEND_URL, {
-      transports: ["websocket"],
-      extraHeaders: {
-        token: token,
-      },
-    });
-
-    setSocket(socket);
-
-    // Notifications section
-    socket.on(
-      "notification",
-      async (notification: INotification) =>
-        await pushNotification(notification)
-    );
+    const newSocket = SocketSingleton.connect(token);
+    setSocket(newSocket);
 
     return () => {
-      socket.disconnect();
+      SocketSingleton.disconnect();
     };
-  }, []);
+  }, [token]);
 
   return (
     <SocketContext.Provider value={{ socket }}>
       {children}
     </SocketContext.Provider>
   );
-}
+};
 
-export const useSocket = () => React.useContext(SocketContext);
+export const useSocket = () => useContext(SocketContext);
+
+export default SocketContextProvider;
